@@ -4,76 +4,11 @@
 -- You can think of a Lua "table" as a dictionary like data structure the
 -- normal format is "key = value". These also handle array like data structures
 -- where a value with no key simply has an implicit numeric key
-
-
-vim.g.ale_fixers = { "prettier" }
-vim.g.ale_fix_on_save = 1
--- .prettierignore ->
--- node_modules
--- .prettierrc.json ->
--- {
---   "arrowParens": "always",
---   "bracketSameLine": false,
---   "bracketSpacing": true,
---   "embeddedLanguageFormatting": "auto",
---   "htmlWhitespaceSensitivity": "css",
---   "insertPragma": false,
---   "jsxSingleQuote": false,
---   "printWidth": 54,
---   "proseWrap": "preserve",
---   "quoteProps": "as-needed",
---   "requirePragma": false,
---   "semi": true,
---   "singleQuote": false,
---   "tabWidth": 2,
---   "trailingComma": "es5",
---   "useTabs": false,
---   "vueIndentScriptAndStyle": false
--- }
-
-
-
-
-vim.opt.list = true
--- vim.opt.listchars:append "eol:↴"
--- vim.opt.listchars:append "eol:"
--- vim.opt.listchars:append "eol:"
--- vim.opt.listchars:append "eol:"
--- vim.opt.listchars:append "eol:"
-
-require("indent_blankline").setup {
-    show_end_of_line = true,
-}
-
-vim.opt.termguicolors = true
-require("notify").setup {
-    background_colour = "Normal",
-    fps = 30,
-    icons = {
-        DEBUG = "",
-        ERROR = "",
-        INFO = "",
-        TRACE = "✎",
-        WARN = ""
-    },
-    level = 2,
-    minimum_width = 50,
-    max_height = 4,
-    render = "minimal",
-    stages = "fade_in_slide_out",
-    timeout = 5000,
-    top_down = false
-}
-
-
-
-
 local config = {
-
     -- Configure AstroNvim updates
     updater = {
         remote = "origin", -- remote to use
-        channel = "nightly", -- "stable" or "nightly"
+        channel = "stable", -- "stable" or "nightly"
         version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
         branch = "main", -- branch name (NIGHTLY ONLY)
         commit = nil, -- commit hash (NIGHTLY ONLY)
@@ -88,13 +23,9 @@ local config = {
         --   ["remote3"] = "github_user", -- GitHub user assume AstroNvim fork
         -- },
     },
-
     -- Set colorscheme to use
-    -- colorscheme = "default_theme",
-    -- colorscheme = "terafox",
-    -- colorscheme = "ayu-mirage",
-    colorscheme = "catppuccin",
-
+    -- colorscheme = "catppuccin",
+    colorscheme = "vscode",
     -- Add highlight groups in any theme
     highlights = {
         -- init = { -- this table overrides highlights in all themes
@@ -104,7 +35,6 @@ local config = {
         --   Normal = { bg = "#000000" },
         -- },
     },
-
     -- set vim options here (vim.<first_key>.<second_key> = value)
     options = {
         opt = {
@@ -124,6 +54,7 @@ local config = {
             status_diagnostics_enabled = true, -- enable diagnostics in statusline
             icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
             ui_notifications_enabled = true, -- disable notifications when toggling UI elements
+            heirline_bufferline = false, -- enable new heirline based bufferline (requires :PackerSync after changing)
         },
     },
     -- If you need more control, you can use the function()...end notation
@@ -150,7 +81,6 @@ local config = {
         "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
         "    ██   ████   ████   ██ ██      ██",
     },
-
     -- Default theme configuration
     default_theme = {
         -- Modify the color palette for the default theme
@@ -159,17 +89,17 @@ local config = {
             bg = "#1e222a",
         },
         highlights = function(hl) -- or a function that returns a new table of colors to set
-            local C = require "default_theme.colors"
+                local C = require "default_theme.colors"
 
-            hl.Normal = { fg = C.fg, bg = C.bg }
+                hl.Normal = { fg = C.fg, bg = C.bg }
 
-            -- New approach instead of diagnostic_style
-            hl.DiagnosticError.italic = true
-            hl.DiagnosticHint.italic = true
-            hl.DiagnosticInfo.italic = true
-            hl.DiagnosticWarn.italic = true
+                -- New approach instead of diagnostic_style
+                hl.DiagnosticError.italic = true
+                hl.DiagnosticHint.italic = true
+                hl.DiagnosticInfo.italic = true
+                hl.DiagnosticWarn.italic = true
 
-            return hl
+                return hl
         end,
         -- enable or disable highlighting for extra plugins
         plugins = {
@@ -194,13 +124,11 @@ local config = {
             ["which-key"] = true,
         },
     },
-
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
         virtual_text = true,
         underline = true,
     },
-
     -- Extend LSP configuration
     lsp = {
         -- enable servers that you already have installed without mason
@@ -212,6 +140,7 @@ local config = {
             format_on_save = {
                 enabled = true, -- enable or disable format on save globally
                 allow_filetypes = { -- enable format on save for specified filetypes only
+                    -- "go",
                     "lua",
                 },
                 ignore_filetypes = { -- disable format on save for specified filetypes
@@ -257,7 +186,6 @@ local config = {
             -- },
         },
     },
-
     -- Mapping data with "desc" stored directly by vim.keymap.set().
     --
     -- Please use this mappings table to set keyboard mapping since this is the
@@ -273,7 +201,6 @@ local config = {
             ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
             ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
             ["<leader>a"] = { "@a" },
-            -- ["<leader>w"] = false, -- disable formatting keymap
             -- quick save
             -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
         },
@@ -282,7 +209,6 @@ local config = {
             -- ["<esc>"] = false,
         },
     },
-
     -- Configure plugins
     plugins = {
         init = {
@@ -291,7 +217,7 @@ local config = {
             { "catppuccin/nvim", as = "catppuccin" },
             "Shatur/neovim-ayu",
             "EdenEast/nightfox.nvim",
-
+            "Mofiqul/vscode.nvim",
             -- You can disable default plugins as follows:
             -- ["goolord/alpha-nvim"] = { disable = true },
 
@@ -314,6 +240,24 @@ local config = {
             --   end,
             -- },
         },
+        ['notify'] = {
+            background_colour = "Normal",
+            fps = 30,
+            icons = {
+                DEBUG = "",
+                ERROR = "",
+                INFO = "",
+                TRACE = "✎",
+                WARN = ""
+            },
+            level = 2,
+            minimum_width = 50,
+            max_height = 4,
+            render = "minimal",
+            stages = "fade_in_slide_out",
+            timeout = 5000,
+            top_down = false
+        },
         ["mason"] = {
             ui = {
                 check_outdated_packages_on_open = false,
@@ -321,18 +265,18 @@ local config = {
         },
         -- All other entries override the require("<key>").setup({...}) call for default plugins
         ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
-            -- config variable is the default configuration table for the setup function call
-            -- local null_ls = require "null-ls"
+                -- config variable is the default configuration table for the setup function call
+                -- local null_ls = require "null-ls"
 
-            -- Check supported formatters and linters
-            -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
-            -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-            config.sources = {
-                -- Set a formatter
-                -- null_ls.builtins.formatting.stylua,
-                -- null_ls.builtins.formatting.prettier,
-            }
-            return config -- return final config table
+                -- Check supported formatters and linters
+                -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
+                -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
+                config.sources = {
+                    -- Set a formatter
+                    -- null_ls.builtins.formatting.stylua,
+                    -- null_ls.builtins.formatting.prettier,
+                }
+                return config -- return final config table
         end,
         treesitter = { -- overrides `require("treesitter").setup(...)`
             ensure_installed = {
@@ -363,66 +307,65 @@ local config = {
                 "html",
                 "cssls"
             },
+            -- ensure_installed = { "sumneko_lua" },
         },
         -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
         ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
             -- ensure_installed = { "prettier", "stylua" },
         },
-
-
-
-
+        ["mason-nvim-dap"] = { -- overrides `require("mason-nvim-dap").setup(...)`
+            -- ensure_installed = { "python" },
+        },
         cmp = function(opts)
-            -- opts parameter is the default options table
-            -- the function is lazy loaded so cmp is able to be required
-            local cmp = require "cmp"
-            local luasnip = require "luasnip"
-            -- modify the mapping part of the table
-            -- opts.mapping["<C-x>"] = cmp.mapping.select_next_item()
+                -- opts parameter is the default options table
+                -- the function is lazy loaded so cmp is able to be required
+                local cmp = require "cmp"
+                local luasnip = require "luasnip"
+                -- modify the mapping part of the table
+                -- opts.mapping["<C-x>"] = cmp.mapping.select_next_item()
 
-            opts.mapping = {
-                ["<C-k>"] = cmp.mapping.select_prev_item(),
-                ["<up>"] = cmp.mapping.select_prev_item(),
-                ["<C-j>"] = cmp.mapping.select_next_item(),
-                ["<down>"] = cmp.mapping.select_next_item(),
-                ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-                ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
-                ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-                ["<C-y>"] = cmp.config.disable,
-                ["<C-e>"] = cmp.mapping {
-                    i = cmp.mapping.abort(),
-                    c = cmp.mapping.close(),
-                },
-                ["<CR>"] = cmp.mapping.confirm { select = true },
-                ["<Tab>"] = nil,
-                ["<c-n>"] = cmp.mapping(function(fallback)
-                    if luasnip.expand_or_jumpable() then
-                        luasnip.expand_or_jump()
-                    else
-                        fallback()
-                    end
-                end, {
-                    "i",
-                    "s",
-                }),
-                ["<S-Tab>"] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        cmp.select_prev_item()
-                    elseif luasnip.jumpable(-1) then
-                        luasnip.jump(-1)
-                    else
-                        fallback()
-                    end
-                end, {
-                    "i",
-                    "s",
-                }),
-            }
+                opts.mapping = {
+                    ["<C-k>"] = cmp.mapping.select_prev_item(),
+                    ["<up>"] = cmp.mapping.select_prev_item(),
+                    ["<C-j>"] = cmp.mapping.select_next_item(),
+                    ["<down>"] = cmp.mapping.select_next_item(),
+                    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs( -1), { "i", "c" }),
+                    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+                    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+                    ["<C-y>"] = cmp.config.disable,
+                    ["<C-e>"] = cmp.mapping {
+                        i = cmp.mapping.abort(),
+                        c = cmp.mapping.close(),
+                    },
+                    ["<CR>"] = cmp.mapping.confirm { select = true },
+                    ["<Tab>"] = nil,
+                    ["<c-n>"] = cmp.mapping(function(fallback)
+                            if luasnip.expand_or_jumpable() then
+                                    luasnip.expand_or_jump()
+                            else
+                                    fallback()
+                            end
+                    end, {
+                        "i",
+                        "s",
+                    }),
+                    ["<S-Tab>"] = cmp.mapping(function(fallback)
+                            if cmp.visible() then
+                                    cmp.select_prev_item()
+                            elseif luasnip.jumpable( -1) then
+                                    luasnip.jump( -1)
+                            else
+                                    fallback()
+                            end
+                    end, {
+                        "i",
+                        "s",
+                    }),
+                }
 
-            -- return the new table to be used
-            return opts
+                -- return the new table to be used
+                return opts
         end,
-
 
         ["neo-tree"] = {
             close_if_last_window = true,
@@ -498,7 +441,7 @@ local config = {
             filesystem = {
                 filtered_items = {
                     visible = false,
-                    hide_dotfiles = true,
+                    hide_dotfiles = false,
                     hide_gitignored = false,
                     hide_by_name = {
                         ".DS_Store",
@@ -537,14 +480,13 @@ local config = {
                 {
                     event = "vim_buffer_enter",
                     handler = function(_)
-                        if vim.bo.filetype == "neo-tree" then
-                            vim.wo.signcolumn = "auto"
-                        end
+                            if vim.bo.filetype == "neo-tree" then
+                                    vim.wo.signcolumn = "auto"
+                            end
                     end,
                 },
             },
         },
-
 
         telescope = {
             pickers = {
@@ -555,10 +497,7 @@ local config = {
                 },
             },
         },
-
-
     },
-
     -- LuaSnip Options
     luasnip = {
         -- Extend filetypes
@@ -571,7 +510,6 @@ local config = {
             paths = {},
         },
     },
-
     -- CMP Source Priorities
     -- modify here the priorities of default cmp sources
     -- higher value == higher priority
@@ -586,7 +524,31 @@ local config = {
             path = 250,
         },
     },
-
+    -- Customize Heirline options
+    heirline = {
+        -- -- Customize different separators between sections
+        -- separators = {
+        --   tab = { "", "" },
+        -- },
+        -- -- Customize colors for each element each element has a `_fg` and a `_bg`
+        -- colors = function(colors)
+        --   colors.git_branch_fg = astronvim.get_hlgroup "Conditional"
+        --   return colors
+        -- end,
+        -- -- Customize attributes of highlighting in Heirline components
+        -- attributes = {
+        --   -- styling choices for each heirline element, check possible attributes with `:h attr-list`
+        --   git_branch = { bold = true }, -- bold the git branch statusline component
+        -- },
+        -- -- Customize if icons should be highlighted
+        -- icon_highlights = {
+        --   breadcrumbs = false, -- LSP symbols in the breadcrumbs
+        --   file_icon = {
+        --     winbar = false, -- Filetype icon in the winbar inactive windows
+        --     statusline = true, -- Filetype icon in the statusline
+        --   },
+        -- },
+    },
     -- Modify which-key registration (Use this with mappings table in the above.)
     ["which-key"] = {
         -- Add bindings which show up as group name
@@ -602,24 +564,81 @@ local config = {
             },
         },
     },
-
     -- This function is run last and is a good place to configuring
     -- augroups/autocommands and custom filetypes also this just pure lua so
     -- anything that doesn't fit in the normal config locations above can go here
     polish = function()
-        -- Set up custom filetypes
-        -- vim.filetype.add {
-        --   extension = {
-        --     foo = "fooscript",
-        --   },
-        --   filename = {
-        --     ["Foofile"] = "fooscript",
-        --   },
-        --   pattern = {
-        --     ["~/%.config/foo/.*"] = "fooscript",
-        --   },
-        -- }
+            -- Set up custom filetypes
+            -- vim.filetype.add {
+            --   extension = {
+            --     foo = "fooscript",
+            --   },
+            --   filename = {
+            --     ["Foofile"] = "fooscript",
+            --   },
+            --   pattern = {
+            --     ["~/%.config/foo/.*"] = "fooscript",
+            --   },
+            -- }
     end,
 }
+
+vim.g.ale_fixers = { "prettier" }
+vim.g.ale_fix_on_save = 1
+-- .prettierignore ->
+-- node_modules
+-- .prettierrc.json ->
+-- {
+--   "arrowParens": "always",
+--   "bracketSameLine": false,
+--   "bracketSpacing": true,
+--   "embeddedLanguageFormatting": "auto",
+--   "htmlWhitespaceSensitivity": "css",
+--   "insertPragma": false,
+--   "jsxSingleQuote": false,
+--   "printWidth": 54,
+--   "proseWrap": "preserve",
+--   "quoteProps": "as-needed",
+--   "requirePragma": false,
+--   "semi": true,
+--   "singleQuote": false,
+--   "tabWidth": 2,
+--   "trailingComma": "es5",
+--   "useTabs": false,
+--   "vueIndentScriptAndStyle": false
+-- }
+
+vim.opt.list = true
+-- vim.opt.listchars:append "eol:↴"
+-- vim.opt.listchars:append "eol:"
+-- vim.opt.listchars:append "eol:"
+-- vim.opt.listchars:append "eol:"
+-- vim.opt.listchars:append "eol:"
+
+require("indent_blankline").setup {
+    show_end_of_line = true,
+}
+
+vim.opt.termguicolors = true
+-- require("notify").setup {
+--     background_colour = "Normal",
+--     fps = 30,
+--     icons = {
+--         DEBUG = "",
+--         ERROR = "",
+--         INFO = "",
+--         TRACE = "✎",
+--         WARN = ""
+--     },
+--     level = 2,
+--     minimum_width = 50,
+--     max_height = 4,
+--     render = "minimal",
+--     stages = "fade_in_slide_out",
+--     timeout = 5000,
+--     top_down = false
+-- }
+--
+
 
 return config
